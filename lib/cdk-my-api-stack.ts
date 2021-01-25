@@ -11,10 +11,12 @@ export class CdkMyApiStack extends cdk.Stack {
 
     const myApiFunction = new lambda.DockerImageFunction(this, 'MyApiFunction', {
       code: lambda.DockerImageCode.fromImageAsset(path.join(__dirname, '../../src')),
+      timeout: cdk.Duration.seconds(30),
+      memorySize: 2048
     });
 
     const myDefaultIntegration = new apigv2int.LambdaProxyIntegration({
-      handler: myApiFunction,
+      handler: myApiFunction
     });
 
     const myHttpApi = new apigv2.HttpApi(this, 'MyApi', {
