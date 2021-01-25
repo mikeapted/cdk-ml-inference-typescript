@@ -13,16 +13,16 @@ export class CdkMyApiStack extends cdk.Stack {
       code: lambda.DockerImageCode.fromImageAsset(path.join(__dirname, '../../src')),
     });
 
-    const defaultIntegration = new apigv2int.LambdaProxyIntegration({
+    const myDefaultIntegration = new apigv2int.LambdaProxyIntegration({
       handler: myApiFunction,
     });
 
-    const httpApi = new apigv2.HttpApi(this, 'MyApi', {
-      defaultIntegration: defaultIntegration
+    const myHttpApi = new apigv2.HttpApi(this, 'MyApi', {
+      defaultIntegration: myDefaultIntegration
     });
 
     new cdk.CfnOutput(this, 'MyApiUrl', {
-      value: httpApi.apiEndpoint
+      value: myHttpApi.apiEndpoint
     });
     
     new cdk.CfnOutput(this, 'MyApiFnLogGroup', {
